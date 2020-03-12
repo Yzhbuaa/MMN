@@ -79,6 +79,10 @@ public:
         std::cout << "total customer number: " << total_customer_served_number_;
     }
 
+    inline bool operator < (const Server& server){
+        return (customer_queue_.size()<server.get_queue_length_());
+    }
+
 private:
     double service_time_{0.0};
 
@@ -99,6 +103,8 @@ private:
     double queue_area_{0.0}; // queue_area_ += customer_queue_.size() * time_since_last_event_
     double average_customer_number_in_queue_{0.0}; // queue_area_ / current_time_
 };
+
+
 
 
 #endif //QUEUE_MM1_SERVER_H
