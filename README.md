@@ -1,2 +1,2 @@
-# Queue_MM1
+# MMN 
 homework in my postgraduate stage 

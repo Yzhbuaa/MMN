@@ -6,6 +6,8 @@
 #define MM1_PROJ_CUSTOMER_H
 
 #include <random>
+#include <algorithm>
+#include <vector>
 #include "Server.h"
 
 
@@ -58,7 +60,9 @@ public:
     double get_event_time_() const{return event_time_;}
 
     Server *get_server_() const {return server_;}
-    void   *set_server_(Server *server) {server_ = server;}
+    void   *set_server_(const std::vector<Server> &server_vec) {
+        server_ = &(*(std::min_element(server_vec.begin(),server_vec.end())));
+    }
 
     bool Arrive();
 

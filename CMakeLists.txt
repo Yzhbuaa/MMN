@@ -1,6 +1,6 @@
 # cmake_minimum_required(VERSION <specify CMake version here>)
-project(Queue_MMN)
+project(MM1)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(Queue_MMN main.cpp Customer.cpp Customer.h EventScheduler.cpp EventScheduler.h Server.cpp Server.h)
+add_executable(MM1 main.cpp Customer.cpp Customer.h EventScheduler.cpp EventScheduler.h Server.cpp Server.h)
