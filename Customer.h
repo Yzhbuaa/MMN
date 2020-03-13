@@ -24,9 +24,11 @@ public:
             server_ = &(*(std::min_element(server_vec.begin(),server_vec.end())));
     }
 
-    Customer(std::vector<Server> &server_vec, const std::mt19937::result_type sd, const double lambda):Customer(server_vec){
+    explicit Customer(std::vector<Server> &server_vec, const std::mt19937::result_type sd, const double lambda):Customer(server_vec){
         InterarrivalTimeCalc(sd,lambda);
     }
+
+    explicit Customer(const std::mt19937::result_type sd, const double lambda):server_(nullptr){}
 
     // Returns the interarrival time of this Customer using exponential distribution
     //
@@ -62,6 +64,10 @@ public:
     double get_event_time_() const{return event_time_;}
 
     Server *get_server_() const {return server_;}
+    Server *set_server_(std::vector<Server> &server_vec) {
+        server_ = &(*(std::min_element(server_vec.begin(),server_vec.end())));
+    }
+
 
 
 
@@ -73,7 +79,7 @@ public:
 private:
     double interarrival_time_{0.0}; // time interval between last customer's arrival time and this customer's arrival time.
     double appear_time_{0.0}; // this customer's appear_time_ = current_time_ + interarrival_time_.
-    double leaving_time_{0.0}; // this customer's leaving_time_
+    double leaving_time_{-1.0}; // this customer's leaving_time_
     double event_time_{0.0}; // event_time = appear_time_ or event_time_ = leaving_time_ depending on whether this customer has been served.
     double waiting_in_queue_time_{0.0}; // waiting_in_queue_time_ = leaving_time_ - appear_time_.
 
