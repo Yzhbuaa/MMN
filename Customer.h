@@ -18,11 +18,13 @@ class Customer {
 public:
 
     // constructor
-    explicit Customer(Server *s):interarrival_time_(0.0),appear_time_(0.0),
-                        leaving_time_(Infinity),waiting_in_queue_time_(0.0),server_(s),event_time_{0.0}{
+    explicit Customer(std::vector<Server> &server_vec):interarrival_time_(0.0),appear_time_(0.0),
+                        leaving_time_(Infinity),waiting_in_queue_time_(0.0),event_time_{0.0}{
+        // sets the server_ which servers this customer. The server_ should have minmum queue length.
+            server_ = &(*(std::min_element(server_vec.begin(),server_vec.end())));
     }
 
-    Customer(Server *s, const std::mt19937::result_type sd, const double lambda):Customer(s){
+    Customer(std::vector<Server> &server_vec, const std::mt19937::result_type sd, const double lambda):Customer(server_vec){
         InterarrivalTimeCalc(sd,lambda);
     }
 
@@ -60,9 +62,8 @@ public:
     double get_event_time_() const{return event_time_;}
 
     Server *get_server_() const {return server_;}
-    void   *set_server_(const std::vector<Server> &server_vec) {
-        server_ = &(*(std::min_element(server_vec.begin(),server_vec.end())));
-    }
+
+
 
     bool Arrive();
 
@@ -76,7 +77,9 @@ private:
     double event_time_{0.0}; // event_time = appear_time_ or event_time_ = leaving_time_ depending on whether this customer has been served.
     double waiting_in_queue_time_{0.0}; // waiting_in_queue_time_ = leaving_time_ - appear_time_.
 
-    Server *server_{nullptr}; // server_ that servers this customer.
+    int flag{0};
+
+    Server *server_; // server_ that servers this customer.
 };
 
 // Customer comparator

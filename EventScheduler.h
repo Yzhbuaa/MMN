@@ -49,7 +49,6 @@ public:
     void set_event_customer_(){
         event_customer_ = *(future_event_set_.begin());
     }
-    // TODO:: MMN modified
     void set_event_server_(){
         event_server_ = event_customer_->get_server_();
     }
@@ -116,9 +115,11 @@ public:
 
     void PrintOutStatistics(){
         //TODO:: MMN modified
-        event_server_->SetStatistics(current_time_);
-        event_server_->PrintOutStatistics();
-        std::cout<<std::endl;
+        for(auto itr=server_vec_.begin();itr!=server_vec_.end();++itr){
+            (*itr).SetStatistics(current_time_);
+            (*itr).PrintOutStatistics();
+            std::cout << std::endl;
+        }
         std::cout<< "Simulation stop at " << current_time_ <<"s"<<std::endl;
     }
 
