@@ -114,7 +114,6 @@ public:
     }
 
     void PrintOutStatistics(){
-        //TODO:: MMN modified
         for(auto itr=server_vec_.begin();itr!=server_vec_.end();++itr){
             (*itr).SetStatistics(current_time_);
             (*itr).PrintOutStatistics();

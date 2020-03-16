@@ -38,7 +38,7 @@ void EventScheduler::Arrive() {
         event_server_->CustomerInQueue(event_customer_);
         event_server_->IncreaseTotalCustomerServedNumber();// everyone who successfully arrives should be counting in the total customer served number
 
-        Customer new_customer(current_time_, input.mean_interarrival_time);//shouldn't set server_ when the customer is just "planning" to arrive.
+        Customer new_customer(server_vec_, current_time_, input.mean_interarrival_time);
         new_customer.set_appear_time_(current_time_);
         customer_vec_.push_back(new_customer);
         EventInFutureEventSet(&(customer_vec_.back()));
@@ -80,9 +80,6 @@ void EventScheduler::Process() {
     //TODO:: MMN modified choose server
     while(customer_vec_.size()-1<input.maximum_number_of_customer){
         set_event_customer_();
-        if(event_customer_->get_leaving_time_()==Infinity){ //if the event is an arrive event
-            event_customer_->set_server_(server_vec_); //resets the event_customer_'s corresponding server_
-        }
         set_event_server_();
         EventOutFutureEventSet();
         AdvanceClock();
